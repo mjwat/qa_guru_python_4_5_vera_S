@@ -1,5 +1,5 @@
 import os
-
+import platform
 from selene import browser, have, command
 from selenium.webdriver import ActionChains, Keys
 
@@ -15,7 +15,11 @@ def test_fill_and_send_form(open_demoqa):
     browser.element('#userNumber').type('0987654321')
 
     browser.element('#dateOfBirthInput').click()
-    ActionChains(browser.driver).key_down(Keys.COMMAND).send_keys('A').key_up(Keys.COMMAND).perform()
+    os_name = platform.system()  # to press Command or Control according OS
+    if os_name == "Darwin":
+        ActionChains(browser.driver).key_down(Keys.COMMAND).send_keys('A').key_up(Keys.COMMAND).perform()
+    else:
+        ActionChains(browser.driver).key_down(Keys.CONTROL).send_keys('A').key_up(Keys.CONTROL).perform()
     browser.element('#dateOfBirthInput').type('05 Mar 1994')
 
     browser.element('#subjectsInput').type('Computer Science').press_enter().type('Maths').press_enter()
@@ -37,8 +41,10 @@ def test_fill_and_send_form(open_demoqa):
     browser.element('//*[contains(text(),"Gender")]/following-sibling::td').should(have.text('Female'))
     browser.element('//*[contains(text(),"Mobile")]/following-sibling::td').should(have.text('0987654321'))
     browser.element('//*[contains(text(),"Date of Birth")]/following-sibling::td').should(have.text('05 March,1994'))
-    browser.element('//*[contains(text(),"Subjects")]/following-sibling::td').should(have.text('Computer Science, Maths'))
+    browser.element('//*[contains(text(),"Subjects")]/following-sibling::td').should(
+        have.text('Computer Science, Maths'))
     browser.element('//*[contains(text(),"Hobbies")]/following-sibling::td').should(have.text('Music'))
     browser.element('//*[contains(text(),"Picture")]/following-sibling::td').should(have.text('duck.png'))
-    browser.element('//*[contains(text(),"Address")]/following-sibling::td').should(have.text('1st avenue 234 - 56, zip 678967'))
+    browser.element('//*[contains(text(),"Address")]/following-sibling::td').should(
+        have.text('1st avenue 234 - 56, zip 678967'))
     browser.element('//*[contains(text(),"State and City")]/following-sibling::td').should(have.text('Haryana Karnal'))
