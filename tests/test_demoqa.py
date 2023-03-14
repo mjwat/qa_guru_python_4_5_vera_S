@@ -16,12 +16,12 @@ def test_fill_and_send_form(open_demoqa):
 
     browser.element('#dateOfBirthInput').click()
     os_name = platform.system()  # to press Command or Control according OS
+    action = ActionChains(browser.driver)
     if os_name == "Darwin":
-        ActionChains(browser.driver).key_down(Keys.COMMAND).send_keys('A').key_up(Keys.COMMAND).perform()
+        action.key_down(Keys.COMMAND).send_keys('A').key_up(Keys.COMMAND).perform()
     else:
-        ActionChains(browser.driver).key_down(Keys.CONTROL).send_keys('A').key_up(Keys.CONTROL).perform()
-    browser.element('#dateOfBirthInput').type('05 Mar 1994')
-    browser.element('#dateOfBirthInput').click()
+        action.key_down(Keys.CONTROL).send_keys('A').key_up(Keys.CONTROL).perform()
+    browser.element('#dateOfBirthInput').type('05 Mar 1994').send_keys(Keys.ESCAPE)
 
     browser.element('#subjectsInput').type('Computer Science').press_enter().type('Maths').press_enter()
     browser.element('[for="hobbies-checkbox-3"]').click()
