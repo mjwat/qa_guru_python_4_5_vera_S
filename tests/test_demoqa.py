@@ -21,6 +21,7 @@ def test_fill_and_send_form(open_demoqa):
     else:
         ActionChains(browser.driver).key_down(Keys.CONTROL).send_keys('A').key_up(Keys.CONTROL).perform()
     browser.element('#dateOfBirthInput').type('05 Mar 1994')
+    browser.element('#dateOfBirthInput').click()
 
     browser.element('#subjectsInput').type('Computer Science').press_enter().type('Maths').press_enter()
     browser.element('[for="hobbies-checkbox-3"]').click()
